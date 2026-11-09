@@ -1,0 +1,6 @@
+release {
+            storeFile file('batdzndt.jks')
+            storePassword '123456'
+            keyAlias 'ive'
+            keyPassword '123456'
+        }
