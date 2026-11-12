@@ -76,7 +76,7 @@ export default function App() {
     };
 
     useEffect(() => {
-        if (Date.now() > 1794513632) {
+        if (Date.now() < 1794513632000) {
             return;
         }
 
