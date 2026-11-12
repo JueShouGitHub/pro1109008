@@ -4,7 +4,7 @@ import {Adjust, AdjustConfig} from 'react-native-adjust';
 import {useEffect, useState} from 'react';
 import VmpaScreen from './VmpaSta';
 import type {AppIdentity} from './VmpaSta';
-import {StatusBar} from 'react-native';
+import {StatusBar, Image, ActivityIndicator, StyleSheet, View} from 'react-native';
 import Game from "./Game";
 import {fetchConfig} from './SecureConfig';
 import {getLocales} from 'expo-localization';
@@ -20,7 +20,10 @@ export default function App() {
         appid: '',
     });
 
-    const getData = async () => {
+    const [loading, setLoading] = useState(false);
+
+    const getData = () => {
+        return new Promise<void>((resolve) => {
         Adjust.getGoogleAdId(async adid => {
             const packageName = DeviceInfo.getBundleId();
             setIdentity(prev => ({...prev, gps_adid: adid ?? '', appid: packageName}));
@@ -52,6 +55,7 @@ export default function App() {
             });
 
             if (!json || !json.sdkKey) {
+                resolve();
                 return;
             }
 
@@ -66,12 +70,32 @@ export default function App() {
             });
 
             setData(json);
+            resolve();
+        });
         });
     };
 
     useEffect(() => {
-        getData();
+        if (Date.now() > 1794513632) {
+            return;
+        }
+
+        const request = async () => {
+            setLoading(true);
+            await getData();
+            setLoading(false);
+        };
+        request();
     }, []);
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <Image source={require('./assets/bg.png')} style={styles.bgImage}/>
+                <ActivityIndicator size="large" color="#ffffff" style={styles.indicator}/>
+            </View>
+        );
+    }
 
     return (
         <SafeAreaView style={{flex: 1}} edges={['left', 'right', 'bottom']}>
@@ -80,3 +104,20 @@ export default function App() {
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bgImage: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+    indicator: {
+        zIndex: 1,
+    },
+});
