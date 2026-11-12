@@ -39,3 +39,10 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# 编译产物与 IDE 配置（不入库）
+bin/
+obj/
+.idea/
+.vs/
+.vscode/

@@ -2,7 +2,7 @@
   "expo": {
     "name": "RotateMaze",
     "slug": "pro1109008",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -12,7 +12,7 @@
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This application integrates push services and only accesses your location information when necessary to provide localized content (such as regional event notifications). You can turn this permission off at any time in the system settings."
       },
-      "buildNumber": "1"
+      "buildNumber": "2"
     },
     "android": {
       "predictiveBackGestureEnabled": false,
@@ -22,7 +22,7 @@
         "com.google.android.gms.permission.AD_ID"
       ],
       "package": "com.dufcfi.vmpa",
-      "versionCode": 1
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
